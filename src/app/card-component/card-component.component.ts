@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataFetchService } from '../services/data-fetch.service';
 
 @Component({
@@ -6,9 +6,16 @@ import { DataFetchService } from '../services/data-fetch.service';
   templateUrl: './card-component.component.html',
   styleUrls: ['./card-component.component.css']
 })
-export class CardComponentComponent {
+export class CardComponentComponent implements OnInit{
+
+  posts: any[] = [];
 
   constructor(private dataService: DataFetchService){}
 
-  
+  ngOnInit(): void {
+    this.dataService.getData().subscribe(data => {
+      this.posts = data;
+    });
+  }
+
 }

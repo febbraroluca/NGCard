@@ -1,3 +1,5 @@
-.card{
-    margin: 5%;
+.card-container {
+  display: flex;
+  margin: 5%;
+  gap: 2rem;
 }
