@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { CardComponentComponent } from './card-component/card-component.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardComponentComponent
+    CardComponentComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
