@@ -1,3 +1,7 @@
-1) provare a togliere il providein root nel service che recupera i post e inserirlo in un apposito AppServicesModule che poi dovrai portare dentro l'appModule. Verificare che tutto funzioni come prima
-2) invece che sulla rotta base far si che la pagina con la lista di tutti i post compaglia sotto un'apposita rotta che dovrai creare nel routing module ossia /postsList. 
-3) digitando una qualsiasi altra rotta inesistente come pre la rotta di base '/' l'applicativo dovrà invece redirezionare automaticamente verso una not-found-page che dovrai appositamente creare
+1) provare a togliere il providein root nel service che recupera i post e inserirlo in un apposito 
+    AppServicesModule che poi dovrai portare dentro l'appModule. 
+    Verificare che tutto funzioni come prima
+2) invece che sulla rotta base far si che la pagina con la lista di tutti i post compaglia 
+    sotto un'apposita rotta che dovrai creare nel routing module ossia /postsList. 
+3) digitando una qualsiasi altra rotta inesistente come pre la rotta di base '/' l'applicativo 
+    dovrà invece redirezionare automaticamente verso una not-found-page che dovrai appositamente creare
