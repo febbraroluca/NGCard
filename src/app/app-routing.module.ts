@@ -4,7 +4,7 @@ import { CardComponentComponent } from './card-component/card-component.componen
 import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
-  { path: 'postslist', component: CardComponentComponent },
+  { path: 'postslist',component: CardComponentComponent },
   { path: '404', component: NotfoundComponent },
   { path: '**', redirectTo: '/404' },
 ];
