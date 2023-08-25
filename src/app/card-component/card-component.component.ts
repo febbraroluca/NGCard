@@ -15,7 +15,7 @@ export class CardComponentComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataService.getData().subscribe(data => {
-      this.posts = data.filter((post) => post.id <= 16);
+      this.posts = data.filter((post) => post.id <= 30);
     });
   }
 
