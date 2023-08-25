@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Ipost } from '../interfaces/post.interface';
 
-export interface Ipost {
-  title: string;
-  body: string;
-  id: number;
-}
 @Injectable()
 export class DataFetchService {
   private url = 'https://jsonplaceholder.typicode.com/posts';
@@ -17,3 +13,5 @@ export class DataFetchService {
     return this.http.get<Ipost[]>(this.url);
   }
 }
+export { Ipost };
+
