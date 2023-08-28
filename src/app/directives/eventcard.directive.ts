@@ -8,11 +8,13 @@ export class EventcardDirective {
 
   @HostListener('mouseover') onMouseEnter() {
     this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1.1)');
-    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'lightblue');
+    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'cornflowerblue');
+    this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
   }
 
   @HostListener('mouseleave') onMouseLeave() {
     this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1)');
     this.renderer.setStyle(this.el.nativeElement, 'background-color', 'white');
+    this.renderer.setStyle(this.el.nativeElement, 'color', 'black');
   }
 }

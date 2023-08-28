@@ -4,18 +4,20 @@ import { AppServicesModule } from './app-services.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CardComponentComponent } from './card-component/card-component.component';
+import { CardComponentComponent } from './components/card/card-component.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { NotfoundComponent } from './notfound/notfound.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 import { EventcardDirective } from './directives/eventcard.directive';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponentComponent,
     NotfoundComponent,
-    EventcardDirective
+    EventcardDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
