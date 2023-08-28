@@ -20,3 +20,6 @@
 .card::-webkit-scrollbar-track {
   display: none;
 }
+.card::-webkit-scrollbar-corner{
+  display: none;
+}
