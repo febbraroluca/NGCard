@@ -24,6 +24,13 @@
     ></textarea>
   </div>
 
+  <div
+    *ngIf="postForm.invalid && (postForm.dirty || postForm.touched)"
+    class="text-danger"
+  >
+    Enter a valid message.
+  </div>
+
   <button
     type="button"
     class="btn btn-secondary mt-3"
@@ -31,10 +38,11 @@
   >
     Cancel
   </button>
+
   <button
     type="submit"
     class="btn btn-primary ms-2 mt-3"
-    [disabled]="!postForm.valid"
+    [disabled]="postForm.invalid"
   >
     Create post
   </button>
