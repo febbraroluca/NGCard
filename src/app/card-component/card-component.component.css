@@ -9,5 +9,14 @@
   overflow: scroll;
 }
 .card::-webkit-scrollbar {
+  width: 6px; 
+  border-radius: 5px; 
+}
+.card::-webkit-scrollbar-thumb {
+  background-color: #616060; 
+  border-radius: 5px; 
+}
+
+.card::-webkit-scrollbar-track {
   display: none;
 }

@@ -1,6 +1,6 @@
 <div class="card-container">
   <div *ngFor="let post of posts">
-    <div class="card" style="width: 16rem">
+    <div class="card" style="width: 16rem" appEventcard>
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-body-secondary">{{ post.id }}</h6>
         <h5 class="card-title">{{ post.title }}</h5>

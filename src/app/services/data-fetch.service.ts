@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Ipost } from '../interfaces/post.interface';
+import { IPost } from '../interfaces/post.interface';
 
 @Injectable()
 export class DataFetchService {
@@ -9,9 +9,8 @@ export class DataFetchService {
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<Ipost[]> {
-    return this.http.get<Ipost[]>(this.url);
+  getData(): Observable<IPost[]> {
+    return this.http.get<IPost[]>(this.url);
   }
 }
-export { Ipost };
-
+export { IPost };

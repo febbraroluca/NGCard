@@ -8,12 +8,14 @@ import { CardComponentComponent } from './card-component/card-component.componen
 
 import { HttpClientModule } from '@angular/common/http';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { EventcardDirective } from './directives/eventcard.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponentComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    EventcardDirective
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataFetchService, Ipost } from '../services/data-fetch.service';
+import { DataFetchService, IPost } from '../services/data-fetch.service';
 import { of, concat, delay } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { of, concat, delay } from 'rxjs';
 
 export class CardComponentComponent implements OnInit{
 
-  posts: Ipost[] = [];
+  posts: IPost[] = [];
 
   constructor(private dataService: DataFetchService){}
 
