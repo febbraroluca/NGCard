@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './createPost.component.html',
   styleUrls: ['./createPost.component.css'],
 })
-export class CreatePostComponent {
+export class CreatePostComponent implements OnInit {
+  postForm!: FormGroup;
 
-  onCreatePost(form: NgForm) {
-    if (form.valid) {
-      console.log(form.value)
-      form.resetForm()
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.postForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      body: ['', Validators.required],
+    });
+  }
+
+  onCreatePost(): void {
+    if (this.postForm.valid) {
+      console.log(this.postForm.value);
+      this.postForm.reset();
     }
   }
 
-  onCancel(form: NgForm) {
-    form.resetForm();
+  onCancel(): void {
+    this.postForm.reset();
   }
 }
