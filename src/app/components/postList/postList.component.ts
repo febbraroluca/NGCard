@@ -3,11 +3,11 @@ import { DataFetchService, IPost } from '../../services/data-fetch.service';
 import { map, noop, switchMap, tap, timer } from 'rxjs';
 
 @Component({
-  selector: 'app-card-component',
-  templateUrl: './card-component.component.html',
-  styleUrls: ['./card-component.component.css'],
+  selector: 'app-post-list',
+  templateUrl: './postList.component.html',
+  styleUrls: ['./postList.component.css'],
 })
-export class CardComponentComponent implements OnInit {
+export class PostListComponent implements OnInit {
   posts: IPost[] = [];
 
   constructor(private dataService: DataFetchService) {}

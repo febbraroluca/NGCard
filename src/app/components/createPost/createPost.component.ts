@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-postform',
-  templateUrl: './postform.component.html',
-  styleUrls: ['./postform.component.css'],
+  selector: 'app-create-post',
+  templateUrl: './createPost.component.html',
+  styleUrls: ['./createPost.component.css'],
 })
-export class PostformComponent {
+export class CreatePostComponent {
 
   onCreatePost(form: NgForm) {
     if (form.valid) {

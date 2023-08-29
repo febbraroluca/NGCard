@@ -5,22 +5,23 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CardComponentComponent } from './components/card/card-component.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { PostListComponent } from './components/postList/postList.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { EventcardDirective } from './directives/eventcard.directive';
 import { HeaderComponent } from './components/header/header.component';
-import { PostformComponent } from './components/postform/postform.component';
+import { CreatePostComponent } from './components/createPost/createPost.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardComponentComponent,
+    PostListComponent,
     NotfoundComponent,
     EventcardDirective,
     HeaderComponent,
-    PostformComponent
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +31,6 @@ import { PostformComponent } from './components/postform/postform.component';
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
