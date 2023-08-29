@@ -9,7 +9,7 @@ import { createPostConsts } from 'src/app/consts/createPost.consts';
 })
 export class CreatePostComponent implements OnInit {
 
-  postForm!: FormGroup;
+  postForm: FormGroup;
   dataConsts = createPostConsts;
 
   constructor(private formBuilder: FormBuilder) {}
