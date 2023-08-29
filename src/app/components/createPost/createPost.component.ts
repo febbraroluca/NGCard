@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { formErrorMessage } from 'src/app/consts/createPost.consts';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { createPostConsts } from 'src/app/consts/createPost.consts';
 
 @Component({
   selector: 'app-create-post',
@@ -10,7 +10,7 @@ import { formErrorMessage } from 'src/app/consts/createPost.consts';
 export class CreatePostComponent implements OnInit {
 
   postForm!: FormGroup;
-  errorMessage: string = formErrorMessage;
+  dataConsts = createPostConsts;
 
   constructor(private formBuilder: FormBuilder) {}
 

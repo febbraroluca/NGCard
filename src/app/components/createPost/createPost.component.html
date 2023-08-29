@@ -1,6 +1,6 @@
 <form [formGroup]="postForm" (ngSubmit)="onCreatePost()">
   <div class="mt-4">
-    <label for="title" class="form-label">Title</label>
+    <label for="title" class="form-label">{{ dataConsts.firstLabel }}</label>
     <input
       type="text"
       formControlName="title"
@@ -13,11 +13,11 @@
     *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched"
     class="text-danger"
   >
-    {{ errorMessage }}
+    {{ dataConsts.formError }}
   </div>
 
   <div class="mt-3">
-    <label for="body" class="form-label">Body</label>
+    <label for="body" class="form-label">{{ dataConsts.secondLabel }}</label>
     <textarea
       formControlName="body"
       class="form-control"
@@ -30,11 +30,11 @@
     *ngIf="postForm.get('body')?.invalid && postForm.get('body')?.touched"
     class="text-danger"
   >
-    {{ errorMessage }}
+    {{ dataConsts.formError }}
   </div>
 
   <button type="button" class="btn btn-secondary mt-3" (click)="onCancel()">
-    Cancel
+    {{ dataConsts.firstButton }}
   </button>
 
   <button
@@ -42,6 +42,6 @@
     class="btn btn-primary ms-2 mt-3"
     [disabled]="postForm.invalid"
   >
-    Create post
+    {{ dataConsts.secondButton }}
   </button>
 </form>
