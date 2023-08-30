@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataFetchService, IPost } from '../../services/data-fetch.service';
 import { map, noop, switchMap, tap, timer } from 'rxjs';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-post-list',
@@ -10,63 +11,71 @@ import { map, noop, switchMap, tap, timer } from 'rxjs';
 export class PostListComponent implements OnInit {
   posts: IPost[] = [];
 
-  constructor(private dataService: DataFetchService) {}
+  constructor(
+    private dataService: DataFetchService,
+    private firebase: FirebaseService
+  ) {}
 
   ngOnInit(): void {
-    const firstGroup$ = timer(1000).pipe(
-      switchMap(() =>
-        this.dataService.getData().pipe(
-          map((data) => {
-            const filteredData = data.filter((dataelem) => dataelem.id <= 10);
+    this.firebase.getPost().subscribe((data: any) => {
+      this.posts = Object.values(data);
+      console.log(this.posts);
+    });
 
-            return filteredData;
-          })
-        )
-      )
-    );
+    // const firstGroup$ = timer(1000).pipe(
+    //   switchMap(() =>
+    //     this.dataService.getData().pipe(
+    //       map((data) => {
+    //         const filteredData = data.filter((dataelem) => dataelem.id <= 10);
 
-    const secondGroup$ = timer(2000).pipe(
-      switchMap(() =>
-        this.dataService
-          .getData()
-          .pipe(
-            map((data) =>
-              data.filter((dataelem) => dataelem.id > 10 && dataelem.id <= 20)
-            )
-          )
-      )
-    );
+    //         return filteredData;
+    //       })
+    //     )
+    //   )
+    // );
 
-    const thirdGroup$ = timer(3000).pipe(
-      switchMap(() =>
-        this.dataService
-          .getData()
-          .pipe(
-            map((data) =>
-              data.filter((dataelem) => dataelem.id > 20 && dataelem.id <= 30)
-            )
-          )
-      )
-    );
+    // const secondGroup$ = timer(2000).pipe(
+    //   switchMap(() =>
+    //     this.dataService
+    //       .getData()
+    //       .pipe(
+    //         map((data) =>
+    //           data.filter((dataelem) => dataelem.id > 10 && dataelem.id <= 20)
+    //         )
+    //       )
+    //   )
+    // );
 
-    firstGroup$
-      .pipe(
-        tap((firstGroup) => (this.posts = firstGroup)),
-        switchMap(() =>
-          secondGroup$.pipe(
-            tap(
-              (secondGroup) => (this.posts = [...this.posts, ...secondGroup])
-            ),
-            switchMap(() =>
-              thirdGroup$.pipe(
-                tap(
-                  (thirdGroup) => (this.posts = [...this.posts, ...thirdGroup])
-                )
-              )
-            )
-          )
-        )
-      )
-      .subscribe(noop);
+    // const thirdGroup$ = timer(3000).pipe(
+    //   switchMap(() =>
+    //     this.dataService
+    //       .getData()
+    //       .pipe(
+    //         map((data) =>
+    //           data.filter((dataelem) => dataelem.id > 20 && dataelem.id <= 30)
+    //         )
+    //       )
+    //   )
+    // );
+
+    // firstGroup$
+    //   .pipe(
+    //     tap((firstGroup) => (this.posts = firstGroup)),
+    //     switchMap(() =>
+    //       secondGroup$.pipe(
+    //         tap(
+    //           (secondGroup) => (this.posts = [...this.posts, ...secondGroup])
+    //         ),
+    //         switchMap(() =>
+    //           thirdGroup$.pipe(
+    //             tap(
+    //               (thirdGroup) => (this.posts = [...this.posts, ...thirdGroup])
+    //             )
+    //           )
+    //         )
+    //       )
+    //     )
+    //   )
+    //   .subscribe(noop);
   }
 }
