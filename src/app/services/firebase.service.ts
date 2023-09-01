@@ -11,14 +11,31 @@ export class FirebaseService {
 
   constructor(private http: HttpClient) {
     this.url =
-      'https://ng-card-b3cba-default-rtdb.europe-west1.firebasedatabase.app/post.json';
+      'https://ng-card-new-default-rtdb.europe-west1.firebasedatabase.app/post';
   }
 
   insertPost(body: {}) {
-    return this.http.post(this.url, body);
+    return this.http.post(`${this.url}/.json`, body);
   }
 
   getPost(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(this.url);
+    return this.http.get<IPost[]>(this.url + '/.json');
+  }
+
+  deletePost(id:any){
+    console.log(`${this.url}/${id}/.json`)
+    return this.http.delete(`${this.url}/${id}/.json`)
+  }
+  
+}
+
+
+/*
+{
+  "rules": {
+    ".read": "now < 1696024800000",  // 2023-9-30
+    ".write": "now < 1696024800000",  // 2023-9-30
   }
 }
+
+*/

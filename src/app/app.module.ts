@@ -12,6 +12,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { EventcardDirective } from './directives/eventcard.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { CreatePostComponent } from './components/createPost/createPost.component';
+import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CreatePostComponent } from './components/createPost/createPost.componen
     NotfoundComponent,
     EventcardDirective,
     HeaderComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,

@@ -10,11 +10,10 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class PostListComponent implements OnInit {
   posts: IPost[] = [];
+  isConfirmationModalOpen = false;
+  selectedPostId: string | null = null;
 
-  constructor(
-    private dataService: DataFetchService,
-    private firebase: FirebaseService
-  ) {}
+  constructor(private firebase: FirebaseService) {}
 
   ngOnInit(): void {
     this.firebase.getPost().subscribe((data: any) => {
@@ -77,5 +76,39 @@ export class PostListComponent implements OnInit {
     //     )
     //   )
     //   .subscribe(noop);
+  }
+
+  openConfirm(postId: string): void {
+    const post = this.posts.find((p) => p.id === postId);
+    if (post) {
+      this.selectedPostId = post.id;
+      this.isConfirmationModalOpen = true;
+      console.log('Modal open confirm');
+    }
+  }
+
+  closeConfirm(): void {
+    this.selectedPostId = null;
+    this.isConfirmationModalOpen = false;
+  }
+
+  deletePost(): void {
+    console.log('Deleting post by ID:', this.selectedPostId);
+    if (this.selectedPostId) {
+      this.firebase.deletePost(this.selectedPostId).subscribe(() => {
+        this.closeConfirm();
+        this.updatePostList();
+        alert('Post deleted succesfully');
+      });
+    }
+  }
+
+  updatePostList(): void {
+    console.log('Updating post list...');
+    this.firebase.getPost().subscribe((data: any) => {
+      console.log('Received data:', data);
+      this.posts = Object.values(data);
+      console.log('Updated posts:', this.posts);
+    });
   }
 }

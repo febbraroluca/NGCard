@@ -5,3 +5,10 @@ export const createPostConsts = {
   firstButton: 'Cancel',
   secondButton: 'Create post',
 };
+
+export const confirmModalConsts = {
+  title: 'Are you sure?',
+  body: 'Delete this post?',
+  cancelButton: 'Cancel',
+  deleteButton: 'Delete',
+};
