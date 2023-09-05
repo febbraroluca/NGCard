@@ -1,7 +1,7 @@
 <app-confirm-modal
 [isConfirmationModalOpen]="isConfirmationModalOpen"
 (closeModal)="closeConfirm()"
-(confirmDelete)="deletePost()"
+(confirmDelete)="deletePost(selectedPostId)"
 ></app-confirm-modal>
 
 <div class="card-container">
@@ -21,7 +21,7 @@
         data-toggle="tooltip"
         data-placement="right"
         title="Delete post"
-        (click)="openConfirm(post.id)"
+        (click)="openConfirm(post.key)"
       >
         <i class="bi bi-trash3-fill"></i>
       </button>

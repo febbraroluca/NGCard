@@ -15,20 +15,19 @@ export class FirebaseService {
   }
 
   insertPost(body: {}) {
-    return this.http.post(`${this.url}/.json`, body);
+    return this.http.post(`${this.url}.json`, body);
   }
 
   getPost(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(this.url + '/.json');
+    return this.http.get<IPost[]>(this.url + '.json');
   }
 
-  deletePost(id:any){
-    console.log(`${this.url}/${id}/.json`)
-    return this.http.delete(`${this.url}/${id}/.json`)
+  deletePost(id:string){
+    console.log(`${this.url}/${id}.json`)
+    return this.http.delete(`${this.url}/${id}.json`)
   }
   
 }
-
 
 /*
 {

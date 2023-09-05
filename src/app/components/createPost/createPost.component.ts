@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createPostConsts } from 'src/app/consts/createPost.consts';
+import { IPost } from 'src/app/interfaces/post.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-create-post',
@@ -29,11 +29,10 @@ export class CreatePostComponent implements OnInit {
     if (this.postForm.valid) {
       this.firebase
         .insertPost({
-          id: uuidv4(),
           title: this.postForm.value.title,
           body: this.postForm.value.body,
         })
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           console.log(data);
         });
       this.postForm.reset();
