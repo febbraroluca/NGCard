@@ -1,0 +1,24 @@
+<form (ngSubmit)="updatePost()" #editPostForm="ngForm">
+  <div class="form-group">
+    <label for="title">Title:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="title"
+      [(ngModel)]="post.title"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="body">Body:</label>
+    <textarea
+      class="form-control"
+      id="body"
+      name="body"
+      [(ngModel)]="post.body"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Save post</button>
+</form>

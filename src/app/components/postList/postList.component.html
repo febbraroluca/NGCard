@@ -1,7 +1,7 @@
 <app-confirm-modal
-[isConfirmationModalOpen]="isConfirmationModalOpen"
-(closeModal)="closeConfirm()"
-(confirmDelete)="deletePost(selectedPostId)"
+  [isConfirmationModalOpen]="isConfirmationModalOpen"
+  (closeModal)="closeConfirm()"
+  (confirmDelete)="deletePost(selectedPostId)"
 ></app-confirm-modal>
 
 <div class="card-container">
@@ -25,6 +25,19 @@
       >
         <i class="bi bi-trash3-fill"></i>
       </button>
+
+      <a [routerLink]="['/modify-post', post.id]">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary position-absolute rounded btn-pencil"
+          style="bottom: 0; right: 0"
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Delete post"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+      </a>
     </div>
   </div>
 </div>

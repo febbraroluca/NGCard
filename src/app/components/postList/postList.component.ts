@@ -13,9 +13,7 @@ export class PostListComponent implements OnInit {
   posts: any = [];
   postId: any;
   isConfirmationModalOpen = false;
-
   selectedPostId: string | null = null;
-  keyPost: any;
 
   constructor(private firebase: FirebaseService) {}
 
@@ -98,15 +96,6 @@ export class PostListComponent implements OnInit {
     this.selectedPostId = null;
     this.isConfirmationModalOpen = false;
   }
-
-  // deletePost(: IPost): void {
-  //   this.firebase.deletePost(postId).subscribe((response) => {
-  //     console.log('deleted', response);
-  //     this.closeConfirm();
-  //     this.updatePostList();
-  //     alert('Post deleted succesfully');
-  //   });
-  // }
 
   deletePost(postId: any) {
     this.firebase.deletePost(postId).subscribe(() => {

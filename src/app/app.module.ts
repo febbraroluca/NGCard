@@ -13,6 +13,10 @@ import { EventcardDirective } from './directives/eventcard.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { CreatePostComponent } from './components/createPost/createPost.component';
 import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm-modal.component';
+import { ModifyPostComponent } from './components/modify-post/modify-post.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -23,7 +27,8 @@ import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm
     EventcardDirective,
     HeaderComponent,
     CreatePostComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ModifyPostComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,8 @@ import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm
     AppServicesModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
