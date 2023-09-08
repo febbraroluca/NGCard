@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataFetchService, IPost } from '../../services/data-fetch.service';
 import { map, noop, subscribeOn, switchMap, tap, timer } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -25,6 +26,44 @@ export class PostListComponent implements OnInit {
       });
       console.log(this.posts);
     });
+  }
+
+  openConfirm(postId: string): void {
+    const post = this.posts.find((p: any) => p.id === postId);
+    if (post) {
+      this.selectedPostId = postId;
+      this.isConfirmationModalOpen = true;
+      console.log('Modal open confirm');
+    }
+  }
+
+  closeConfirm(): void {
+    this.selectedPostId = null;
+    this.isConfirmationModalOpen = false;
+  }
+
+  deletePost(postId: any) {
+    this.firebase.deletePost(postId).subscribe(() => {
+      this.posts = this.posts.filter((post: any) => post.id !== postId);
+      this.closeConfirm();
+      this.updatePostList();
+      alert('Post deleted succesfully');
+    });
+  }
+
+  updatePostList(): void {
+    console.log('Updating post list...');
+    this.firebase.getPost().subscribe((data: any) => {
+      console.log('Received data:', data);
+      this.posts = Object.keys(data).map((key) => {
+        data[key]['id'] = key;
+        return data[key];
+      });
+      console.log('Updated posts:', this.posts);
+    });
+  }
+}
+
 
     // const firstGroup$ = timer(1000).pipe(
     //   switchMap(() =>
@@ -81,40 +120,3 @@ export class PostListComponent implements OnInit {
     //     )
     //   )
     //   .subscribe(noop);
-  }
-
-  openConfirm(postId: string): void {
-    const post = this.posts.find((p: any) => p.key === postId);
-    if (post) {
-      this.selectedPostId = post.id;
-      this.isConfirmationModalOpen = true;
-      console.log('Modal open confirm');
-    }
-  }
-
-  closeConfirm(): void {
-    this.selectedPostId = null;
-    this.isConfirmationModalOpen = false;
-  }
-
-  deletePost(postId: any) {
-    this.firebase.deletePost(postId).subscribe(() => {
-      this.posts = this.posts.filter((post: any) => post.key !== postId);
-      this.closeConfirm();
-      this.updatePostList();
-      alert('Post deleted succesfully');
-    });
-  }
-
-  updatePostList(): void {
-    console.log('Updating post list...');
-    this.firebase.getPost().subscribe((data: any) => {
-      console.log('Received data:', data);
-      this.posts = Object.keys(data).map((key) => {
-        data[key]['id'] = key;
-        return data[key];
-      });
-      console.log('Updated posts:', this.posts);
-    });
-  }
-}
