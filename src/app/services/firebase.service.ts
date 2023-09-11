@@ -38,3 +38,5 @@ export class FirebaseService {
   }
   
 }
+
+export { IPost };

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createPostConsts } from 'src/app/consts/createPost.consts';
-import { IPost } from 'src/app/interfaces/post.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({

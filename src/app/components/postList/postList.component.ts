@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataFetchService, IPost } from '../../services/data-fetch.service';
-import { map, noop, subscribeOn, switchMap, tap, timer } from 'rxjs';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-
+import { FirebaseService, IPost } from 'src/app/services/firebase.service';
 @Component({
   selector: 'app-post-list',
   templateUrl: './postList.component.html',
