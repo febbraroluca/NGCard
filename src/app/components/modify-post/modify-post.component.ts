@@ -32,8 +32,8 @@ export class ModifyPostComponent {
   updatePost(): void {
     this.firebase.updatePost(this.post, this.postId).subscribe(
       () => {
-        //this.toastr.success('Post updated succesfully', 'Success');
-        alert('post updated succesfully')
+        this.toastr.success('Post updated succesfully', 'Success');
+        //alert('post updated succesfully')
         setTimeout(() => {
           this.router.navigate(['/postlist']);
         }, 4000);
