@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostListComponent } from './components/postList/postList.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { EventcardDirective } from './directives/eventcard.directive';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './shared-components/header/header.component';
 import { CreatePostComponent } from './components/createPost/createPost.component';
 import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm-modal.component';
 import { ModifyPostComponent } from './components/modify-post/modify-post.component';

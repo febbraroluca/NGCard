@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostListComponent } from './components/postList/postList.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CreatePostComponent } from './components/createPost/createPost.component';
 import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm-modal.component';
@@ -14,10 +13,34 @@ const routes: Routes = [
         (m) => m.PostlistModule
       ),
   },
-  { path: 'create-post', component: CreatePostComponent },
-  { path: 'modalconfirm', component: ConfirmModalComponent },
-  { path: 'modify-post/:id', component: ModifyPostComponent },
-  { path: '404', component: NotfoundComponent },
+  {
+    path: 'create-post',
+    loadChildren: () =>
+      import('./components/createPost/create-post/create-post.module').then(
+        (m) => m.CreatePostModule
+      ),
+  },
+  {
+    path: 'modalconfirm',
+    loadChildren: () =>
+      import(
+        './/shared-components/confirm-modal/confirm-modal/confirm-modal.module'
+      ).then((m) => m.ConfirmModalModule),
+  },
+  {
+    path: 'modify-post/:id',
+    loadChildren: () =>
+      import('./components/modify-post/modify-post/modify-post.module').then(
+        (m) => m.ModifyPostModule
+      ),
+  },
+  {
+    path: '404',
+    loadChildren: () =>
+      import('./components/notfound/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
+  },
   { path: '**', redirectTo: '/404' },
 ];
 
