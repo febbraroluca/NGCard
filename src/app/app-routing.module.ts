@@ -7,7 +7,13 @@ import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm
 import { ModifyPostComponent } from './components/modify-post/modify-post.component';
 
 const routes: Routes = [
-  { path: 'postlist', component: PostListComponent },
+  {
+    path: 'postlist',
+    loadChildren: () =>
+      import('./components/postList/postlist.module').then(
+        (m) => m.PostlistModule
+      ),
+  },
   { path: 'create-post', component: CreatePostComponent },
   { path: 'modalconfirm', component: ConfirmModalComponent },
   { path: 'modify-post/:id', component: ModifyPostComponent },
