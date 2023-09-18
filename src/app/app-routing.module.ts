@@ -16,28 +16,28 @@ const routes: Routes = [
   {
     path: 'create-post',
     loadChildren: () =>
-      import('./components/createPost/create-post/create-post.module').then(
+      import('./components/createPost/create-post.module').then(
         (m) => m.CreatePostModule
       ),
   },
   {
     path: 'modalconfirm',
     loadChildren: () =>
-      import(
-        './/shared-components/confirm-modal/confirm-modal/confirm-modal.module'
-      ).then((m) => m.ConfirmModalModule),
+      import('.//shared-components/confirm-modal/confirm-modal.module').then(
+        (m) => m.ConfirmModalModule
+      ),
   },
   {
     path: 'modify-post/:id',
     loadChildren: () =>
-      import('./components/modify-post/modify-post/modify-post.module').then(
+      import('./components/modify-post/modify-post.module').then(
         (m) => m.ModifyPostModule
       ),
   },
   {
     path: '404',
     loadChildren: () =>
-      import('./components/notfound/not-found/not-found.module').then(
+      import('./components/notfound/not-found.module').then(
         (m) => m.NotFoundModule
       ),
   },

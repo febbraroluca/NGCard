@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfirmModalComponent } from '../confirm-modal.component';
+import { CreatePostComponent } from './createPost.component';
 
-const routes: Routes = [{ path: '', component: ConfirmModalComponent }];
+const routes: Routes = [{ path: '', component: CreatePostComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ConfirmModalRoutingModule {}
+export class CreatePostRoutingModule {}

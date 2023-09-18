@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ModifyPostComponent } from '../modify-post.component';
+import { ModifyPostComponent } from './modify-post.component';
 
 const routes: Routes = [{ path: '', component: ModifyPostComponent }];
 
