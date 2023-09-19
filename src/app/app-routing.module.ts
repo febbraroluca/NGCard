@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotfoundComponent } from './components/notfound/notfound.component';
-import { CreatePostComponent } from './components/createPost/createPost.component';
-import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm-modal.component';
-import { ModifyPostComponent } from './components/modify-post/modify-post.component';
 
 const routes: Routes = [
   {

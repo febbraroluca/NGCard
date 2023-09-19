@@ -1,15 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService, IPost } from 'src/app/services/firebase.service';
+import { trigger, style, animate, transition } from '@angular/animations';
+
 @Component({
   selector: 'app-post-list',
   templateUrl: './postList.component.html',
   styleUrls: ['./postList.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('1500ms ease-in', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
+
 export class PostListComponent implements OnInit {
   posts: IPost[] = [];
   postId: any;
   isConfirmationModalOpen = false;
   selectedPostId: string | null = null;
+  animationState = 'in';
 
   constructor(private firebase: FirebaseService) {}
 
