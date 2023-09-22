@@ -10,6 +10,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'postlist/:pageNumber',
+    loadChildren: () =>
+      import('./components/postList/postlist.module').then(
+        (m) => m.PostlistModule
+      ),
+  },
+  {
     path: 'create-post',
     loadChildren: () =>
       import('./components/createPost/create-post.module').then(

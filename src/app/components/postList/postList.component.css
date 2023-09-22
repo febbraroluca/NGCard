@@ -1,8 +1,9 @@
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  margin: 5%;
   gap: 2rem;
+  justify-content: center;
+  align-items: center; 
 }
 .card {
   height: 16rem;
@@ -26,4 +27,8 @@
 
 .btn-pencil {
   margin-right: 2.5rem;
+}
+
+.nSpan{
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService, IPost } from 'src/app/services/firebase.service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -10,20 +11,26 @@ import { trigger, style, animate, transition } from '@angular/animations';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('1500ms ease-in', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+        animate('1500ms ease-in', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
-
 export class PostListComponent implements OnInit {
   posts: IPost[] = [];
   postId: any;
   isConfirmationModalOpen = false;
   selectedPostId: string | null = null;
   animationState = 'in';
+  currentPage = 1;
+  postsPerPage = 12;
+  pages: number[] = [];
 
-  constructor(private firebase: FirebaseService) {}
+  constructor(
+    private firebase: FirebaseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.firebase.getPost().subscribe((data: any) => {
@@ -31,64 +38,34 @@ export class PostListComponent implements OnInit {
         data[key]['id'] = key;
         return data[key];
       });
+
+      const totalPages = Math.ceil(this.posts.length / this.postsPerPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+        this.pages.push(i);
+      }
+      
       console.log(this.posts);
+
+      this.route.paramMap.subscribe((params: ParamMap) => {
+        const pageNumber = params.get('pageNumber');
+        if (pageNumber) {
+          this.currentPage = +pageNumber;
+        } else {
+          this.currentPage = 1;
+        }
+      });
     });
+  }
 
-    // const firstGroup$ = timer(1000).pipe(
-    //   switchMap(() =>
-    //     this.firebase.getPost().pipe(
-    //       map((data) => {
-    //         const filteredData = data.filter((dataelem) => dataelem.key <= 10);
+  get pagedPosts() {
+    const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    const endIndex = startIndex + this.postsPerPage;
+    return this.posts.slice(startIndex, endIndex);
+  }
 
-    //         return filteredData;
-    //       })
-    //     )
-    //   )
-    // );
-
-    // const secondGroup$ = timer(2000).pipe(
-    //   switchMap(() =>
-    //     this.firebase
-    //       .getPost()
-    //       .pipe(
-    //         map((data) =>
-    //           data.filter((dataelem) => dataelem.id > 10 && dataelem.id <= 20)
-    //         )
-    //       )
-    //   )
-    // );
-
-    // const thirdGroup$ = timer(3000).pipe(
-    //   switchMap(() =>
-    //     this.firebase
-    //       .getPost()
-    //       .pipe(
-    //         map((data) =>
-    //           data.filter((dataelem) => dataelem.id > 20 && dataelem.id <= 30)
-    //         )
-    //       )
-    //   )
-    // );
-
-    // firstGroup$
-    //   .pipe(
-    //     tap((firstGroup) => (this.posts = firstGroup)),
-    //     switchMap(() =>
-    //       secondGroup$.pipe(
-    //         tap(
-    //           (secondGroup) => (this.posts = [...this.posts, ...secondGroup])
-    //         ),
-    //         switchMap(() =>
-    //           thirdGroup$.pipe(
-    //             tap(
-    //               (thirdGroup) => (this.posts = [...this.posts, ...thirdGroup])
-    //             )
-    //           )
-    //         )
-    //       )
-    //     )
-    //   )
-    //   .subscribe(noop);
+  changePage(page: number) {
+    this.router.navigate(['/postlist', page]);
   }
 
   openConfirm(postId: string): void {
