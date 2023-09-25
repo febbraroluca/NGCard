@@ -16,6 +16,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
     ]),
   ],
 })
+
 export class PostListComponent implements OnInit {
   posts: IPost[] = [];
   postId: any;
@@ -44,7 +45,7 @@ export class PostListComponent implements OnInit {
       for (let i = 1; i <= totalPages; i++) {
         this.pages.push(i);
       }
-      
+
       console.log(this.posts);
 
       this.route.paramMap.subscribe((params: ParamMap) => {
