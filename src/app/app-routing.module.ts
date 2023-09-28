@@ -44,6 +44,14 @@ const routes: Routes = [
         (m) => m.NotFoundModule
       ),
   },
+  {
+    path: '',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./components/postList/postlist.module').then(
+        (m) => m.PostlistModule
+      ),
+  },
   { path: '**', redirectTo: '/404' },
 ];
 
