@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+  margin-top: 5%;
   justify-content: center;
   align-items: center; 
 }
@@ -27,8 +28,4 @@
 
 .btn-pencil {
   margin-right: 2.5rem;
-}
-
-.nSpan{
-
 }

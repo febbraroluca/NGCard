@@ -16,6 +16,7 @@ import { ConfirmModalComponent } from './shared-components/confirm-modal/confirm
 import { ModifyPostComponent } from './components/modify-post/modify-post.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchBoxComponent } from './shared-components/search-box/search-box.component';
 
 
 
@@ -28,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     CreatePostComponent,
     ConfirmModalComponent,
-    ModifyPostComponent
+    ModifyPostComponent,
+    SearchBoxComponent
   ],
   imports: [
     BrowserModule,
