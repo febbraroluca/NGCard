@@ -4,28 +4,37 @@
   gap: 2rem;
   margin-top: 5%;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .card {
   height: 16rem;
   overflow: scroll;
 }
 .card::-webkit-scrollbar {
-  width: 6px; 
-  border-radius: 5px; 
+  width: 6px;
+  border-radius: 5px;
 }
 .card::-webkit-scrollbar-thumb {
-  background-color: #616060; 
-  border-radius: 5px; 
+  background-color: #616060;
+  border-radius: 5px;
 }
 
 .card::-webkit-scrollbar-track {
   display: none;
 }
-.card::-webkit-scrollbar-corner{
+.card::-webkit-scrollbar-corner {
   display: none;
 }
 
 .btn-pencil {
   margin-right: 2.5rem;
+}
+
+.pagesContainer {
+  position: relative;
+  left: 50%;
+}
+
+.totalPosts {
+  height: 100%;
 }

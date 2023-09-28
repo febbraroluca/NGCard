@@ -20,7 +20,7 @@ export class SearchBoxComponent {
     });
 
     this.searchForm.controls['searchQuery'].valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
+      .pipe(distinctUntilChanged())
       .subscribe((query: string) => {
         this.searchService.setSearchQuery(query);
       });
