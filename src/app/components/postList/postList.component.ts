@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import {
   debounceTime,
   distinctUntilChanged,
-  map,
   switchMap,
 } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
