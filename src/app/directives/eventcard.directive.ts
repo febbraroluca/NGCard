@@ -8,7 +8,7 @@ export class EventcardDirective {
 
   @HostListener('mouseover') onMouseEnter() {
     this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1.1)');
-    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'cornflowerblue');
+    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'greenyellow');
     this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
   }
 
