@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Clear Actions Cache
+      run: |
+        npm cache clean -f
+        yarn cache clean
+      env:
+        NODE_VERSION: 14
+
     - name: Checkout code
       uses: actions/checkout@v2
 
