@@ -15,7 +15,7 @@ jobs:
         npm cache clean -f
         yarn cache clean
       env:
-        NODE_VERSION: 14
+        NODE_VERSION: 18.16.1
 
     - name: Checkout code
       uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 14
+        node-version: 18.16.1
 
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
