@@ -34,5 +34,7 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Deploy to Firebase
+    - name: Deploy to Firebase Hosting
       run: firebase deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
