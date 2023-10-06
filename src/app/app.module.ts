@@ -17,6 +17,7 @@ import { ModifyPostComponent } from './components/modify-post/modify-post.compon
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBoxComponent } from './shared-components/search-box/search-box.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 
 
@@ -30,7 +31,8 @@ import { SearchBoxComponent } from './shared-components/search-box/search-box.co
     CreatePostComponent,
     ConfirmModalComponent,
     ModifyPostComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

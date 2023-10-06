@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 const routes: Routes = [
+  {
+    path: 'homepage',
+    component: HomepageComponent,
+  },
   {
     path: 'postlist',
     loadChildren: () =>
@@ -44,7 +49,7 @@ const routes: Routes = [
         (m) => m.NotFoundModule
       ),
   },
-  { path: '**', redirectTo: '/404' },
+  { path: '**', redirectTo: '/homepage' },
 ];
 
 @NgModule({
