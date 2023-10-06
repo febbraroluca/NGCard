@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { FirebaseService, IPost } from 'src/app/services/firebase.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -37,12 +37,14 @@ export class PostListComponent implements OnInit {
   searchForm: FormGroup;
   searchResults$: Observable<IPost[]>;
   searchPerformed = false;
+  isLoading = true
 
   constructor(
     private firebase: FirebaseService,
     private route: ActivatedRoute,
     private router: Router,
-    private searchService: SearchServiceService
+    private searchService: SearchServiceService,
+    private cdr: ChangeDetectorRef
   ) {
     this.searchResults$ = this.searchService.getSearchQuery().pipe(
       debounceTime(300),
@@ -72,6 +74,10 @@ export class PostListComponent implements OnInit {
         { length: Math.ceil(this.posts.length / this.postsPerPage) },
         (_, index) => index + 1
       );
+
+      this.isLoading = false;
+      this.cdr.detectChanges();
+      
     });
   }
 
