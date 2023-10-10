@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
-import { FirebaseService, IPost } from 'src/app/services/firebase.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
@@ -11,6 +11,9 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { SearchServiceService } from 'src/app/services/search-service.service';
+import { Store } from '@ngrx/store';
+import * as fromPosts from '../../store/post';
+import { IPost } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'app-post-list',
@@ -44,7 +47,8 @@ export class PostListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private searchService: SearchServiceService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private store: Store<fromPosts.IPostState>
   ) {
     this.searchResults$ = this.searchService.getSearchQuery().pipe(
       debounceTime(300),

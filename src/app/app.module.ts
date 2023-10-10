@@ -18,7 +18,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBoxComponent } from './shared-components/search-box/search-box.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
-
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { PostStoreModule } from './store/post/post-store.module';
 
 
 @NgModule({
@@ -43,6 +46,10 @@ import { HomepageComponent } from './components/homepage/homepage.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    StoreModule.forRoot(),
+    EffectsModule.forRoot(),
+    StoreDevtoolsModule.instrument({}),
+    PostStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
