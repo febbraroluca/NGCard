@@ -7,7 +7,6 @@ import { PostResponse } from '../interfaces/post.interface';
 @Injectable({
   providedIn: 'root',
 })
-
 export class PostService {
   private url;
 
@@ -18,25 +17,24 @@ export class PostService {
 
   insertPost(body: {}): Observable<PostResponse> {
     return this.http.post<PostResponse>(`${this.url}.json`, body);
-  }  
+  }
 
   getPost(): Observable<IPost[]> {
     return this.http.get<IPost[]>(this.url + '.json');
   }
 
-  getPostById(id:string){
-    console.log('getting post by id: ', id)
-    return this.http.get(`${this.url}/${id}.json`);
+  getPostById(id: string): Observable<IPost> {
+    console.log('getting post by id: ', id);
+    return this.http.get<IPost>(`${this.url}/${id}.json`);
   }
 
-  deletePost(id:string){
-    console.log(`${this.url}/${id}.json`)
-    return this.http.delete(`${this.url}/${id}.json`)
+  deletePost(id: string): Observable<any> {
+    console.log(`${this.url}/${id}.json`);
+    return this.http.delete(`${this.url}/${id}.json`);
   }
 
   updatePost(post: any, postId: string): Observable<any> {
     const url = `${this.url}/${postId}.json`;
     return this.http.patch(url, post);
   }
-  
 }

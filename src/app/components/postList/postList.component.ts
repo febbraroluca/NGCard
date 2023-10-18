@@ -1,19 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { SearchServiceService } from 'src/app/services/search-service.service';
 import { Store } from '@ngrx/store';
 import * as fromPosts from '../../store/post';
 import { IPost } from '../../interfaces/post.interface';
+import { selectPostsList } from '../../store/post/post.selectors';
+import { select } from '@ngrx/store';
 
 @Component({
   selector: 'app-post-list',
@@ -40,14 +38,13 @@ export class PostListComponent implements OnInit {
   searchForm: FormGroup;
   searchResults$: Observable<IPost[]>;
   searchPerformed = false;
-  isLoading = true
+  isLoading = true;
 
   constructor(
     private firebase: FirebaseService,
     private route: ActivatedRoute,
     private router: Router,
     private searchService: SearchServiceService,
-    private cdr: ChangeDetectorRef,
     private store: Store<fromPosts.IPostState>
   ) {
     this.searchResults$ = this.searchService.getSearchQuery().pipe(
@@ -68,35 +65,26 @@ export class PostListComponent implements OnInit {
       }
     });
 
-    this.firebase.getPost().subscribe((data: any) => {
-      this.posts = Object.keys(data).map((key) => {
-        data[key]['id'] = key;
-        return data[key];
-      });
+    this.store.pipe(select(selectPostsList)).subscribe((posts) => {
+      this.posts = posts;
+      this.isLoading = false;
+
+      if (this.searchPerformed) {
+        this.store.dispatch(fromPosts.getPosts({ posts: this.posts }));
+      }
 
       this.pages = Array.from(
         { length: Math.ceil(this.posts.length / this.postsPerPage) },
         (_, index) => index + 1
       );
-
-      this.isLoading = false;
-      this.cdr.detectChanges();
-      
     });
   }
+
 
   getPagedPosts(): IPost[] {
     const startIndex = (this.currentPage - 1) * this.postsPerPage;
     const endIndex = startIndex + this.postsPerPage;
     return this.posts.slice(startIndex, endIndex);
-  }
-
-  get pagedPosts(): Observable<IPost[]> {
-    if (this.searchPerformed) {
-      return this.searchResults$;
-    } else {
-      return of(this.getPagedPosts());
-    }
   }
 
   changePage(page: number) {
