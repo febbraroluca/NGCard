@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs'; 
+import { map, switchMap } from 'rxjs/operators';
 
 import * as fromPosts from './index';
 import { PostService } from '../post/services/post.service';
-import { IPost } from '../../interfaces/post.interface';
-import { PostResponse } from './interfaces/post.interface';
 
 @Injectable()
 export class PostsEffects {
@@ -20,46 +17,32 @@ export class PostsEffects {
   getPosts$ = createEffect(() =>
   this.actions$.pipe(
     ofType(fromPosts.getPosts),
-    switchMap(() =>
-      this.postService.getPost().pipe(
-        map((posts) => fromPosts.getPostSuccess({
-          posts,
-          postsPerPage: 0
-        })),
-      )
-    )
+    switchMap(() => {
+      console.log('getPosts$ effect is triggered');
+      return this.postService.getPost().pipe(
+        map((posts) => {
+          console.log('Received posts:', posts);
+          return fromPosts.getPostSuccess({ posts });
+        })
+      );
+    })
   )
 );
-
-
-  createPost$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromPosts.createPost),
-      switchMap(({ post }) => this.postService.insertPost(post)),
-      map((response: PostResponse) =>
-        fromPosts.createPostSuccess({ post: response })
-      )
-    )
-  );
-
-  updatePost$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromPosts.updatePost),
-      switchMap(({ post }) =>
-        this.postService
-          .updatePost(post, post.id)
-          .pipe(map(() => fromPosts.updatePostSuccess({ post })))
-      )
-    )
-  );
 
   deletePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromPosts.deletePost),
-      switchMap(({ post }) =>
+      switchMap(({ postId }) => this.postService.deletePost(postId))
+    )
+  );
+
+  updatePostList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromPosts.updatePostList),
+      switchMap(() =>
         this.postService
-          .deletePost(post.id)
-          .pipe(map(() => fromPosts.deletePostSuccess({ post })))
+          .getPost()
+          .pipe(map((posts) => fromPosts.getPostSuccess({ posts })))
       )
     )
   );

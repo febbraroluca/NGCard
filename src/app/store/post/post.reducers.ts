@@ -1,62 +1,49 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { IPostState } from './post.model';
+import { createReducer, on } from '@ngrx/store';
 import * as fromPosts from './index';
 import { IPost } from './interfaces/post.interface';
 
-export const initialPostsState: IPostState = {
+export interface PostListState {
+  posts: IPost[];
+  currentPage: number;
+  searchQuery: string;
+}
+
+export const initialState: PostListState = {
   posts: [],
-  pages: [],
-  isLoading: false,
-  postsPerPage: 0,
+  currentPage: 1,
+  searchQuery: '',
 };
 
-const reducer = createReducer<IPostState>(
-  initialPostsState,
+export const postListReducer = createReducer<PostListState>(
+  initialState,
 
-  on(
-    fromPosts.getPosts,
-    fromPosts.createPost,
-    fromPosts.updatePost,
-    fromPosts.deletePost,
-    (state) => ({ ...state, isLoading: true })
-  ),
+  on(fromPosts.getPosts, (state) => state),
+  on(fromPosts.getPosts, (state) => {
+    console.log('Reducer: getPosts action is dispatched');
+    return state;
+  }),
 
-  on(fromPosts.getPostSuccess, (state, { posts, postsPerPage }) => ({
+  on(fromPosts.getPostSuccess, (state, { posts }) => {
+    console.log(
+      'Reducer: getPostSuccess action is dispatched with posts:',
+      posts
+    );
+    return { ...state, posts };
+  }),
+
+  on(fromPosts.deletePost, (state, { postId }) => ({
     ...state,
-    posts,
-    pages: createPagesArray(posts, postsPerPage),
-    isLoading: false,
+    posts: state.posts.filter((post) => post.id !== postId),
   })),
 
-  on(fromPosts.createPostSuccess, (state, { post }) => ({
-    ...state,
-    posts: [...state.posts, post],
-    isLoading: false,
-  })),
+  on(fromPosts.updatePostList, (state) => state),
 
-  on(fromPosts.updatePostSuccess, (state, { post }) => ({
+  on(fromPosts.searchPosts, (state, { query }) => ({
     ...state,
-    posts: state.posts.map((p) => (p.id === post.id ? post : p)),
-    isLoading: false,
+    searchQuery: query,
   })),
-
-  on(fromPosts.deletePostSuccess, (state, { post }) => ({
+  on(fromPosts.searchPostsSuccess, (state, { searchResults }) => ({
     ...state,
-    isLoading: false,
-    posts: state.posts.filter((p) => p.id !== post.id),
+    searchResults,
   }))
 );
-
-function createPagesArray(posts: IPost[], postsPerPage: number): number[] {
-  return Array.from(
-    { length: Math.ceil(posts.length / postsPerPage) },
-    (_, index) => index + 1
-  );
-}
-
-export function postsReducer(
-  state = initialPostsState,
-  action: Action
-): IPostState {
-  return reducer(state, action);
-}

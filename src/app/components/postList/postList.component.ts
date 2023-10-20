@@ -1,17 +1,16 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+
 import { Observable } from 'rxjs/internal/Observable';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/internal/observable/of';
-import { SearchServiceService } from 'src/app/services/search-service.service';
+import { map } from 'rxjs/operators';
+
 import { Store } from '@ngrx/store';
 import * as fromPosts from '../../store/post';
 import { IPost } from '../../interfaces/post.interface';
-import { selectPostsList } from '../../store/post/post.selectors';
-import { select } from '@ngrx/store';
+import { IPostState } from '../../store/post/post.model';
 
 @Component({
   selector: 'app-post-list',
@@ -26,12 +25,19 @@ import { select } from '@ngrx/store';
     ]),
   ],
 })
+
 export class PostListComponent implements OnInit {
-  posts: IPost[] = [];
-  postId: any;
+  posts$: Observable<IPost[]>;
+  currentPage$: Observable<number>;
+  searchQuery$: Observable<string>;
+  filteredPosts$: Observable<IPost[]>;
+  pagedPosts$: Observable<IPost[]>;
+
   isConfirmationModalOpen = false;
-  selectedPostId: string | null = null;
   animationState = 'in';
+  selectedPostId: string | null = null;
+
+  postId: any;
   currentPage = 1;
   postsPerPage = 12;
   pages: number[] = [];
@@ -41,18 +47,14 @@ export class PostListComponent implements OnInit {
   isLoading = true;
 
   constructor(
-    private firebase: FirebaseService,
     private route: ActivatedRoute,
     private router: Router,
-    private searchService: SearchServiceService,
-    private store: Store<fromPosts.IPostState>
+    private store: Store<IPostState>,
   ) {
-    this.searchResults$ = this.searchService.getSearchQuery().pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((query: string) => this.searchPosts(query))
-    );
-    console.log(this.searchResults$);
+    this.posts$ = this.store.select(fromPosts.selectPosts);
+    this.currentPage$ = this.store.select(fromPosts.selectCurrentPage);
+    this.searchQuery$ = this.store.select(fromPosts.selectSearchQuery);
+    this.filteredPosts$ = this.store.select(fromPosts.selectFilteredPosts);
   }
 
   ngOnInit(): void {
@@ -65,26 +67,19 @@ export class PostListComponent implements OnInit {
       }
     });
 
-    this.store.pipe(select(selectPostsList)).subscribe((posts) => {
-      this.posts = posts;
-      this.isLoading = false;
+    this.store.dispatch(fromPosts.getPosts());
+    this.pagedPosts$ = this.getPagedPosts();
 
-      if (this.searchPerformed) {
-        this.store.dispatch(fromPosts.getPosts({ posts: this.posts }));
-      }
-
-      this.pages = Array.from(
-        { length: Math.ceil(this.posts.length / this.postsPerPage) },
-        (_, index) => index + 1
-      );
-    });
   }
 
-
-  getPagedPosts(): IPost[] {
-    const startIndex = (this.currentPage - 1) * this.postsPerPage;
-    const endIndex = startIndex + this.postsPerPage;
-    return this.posts.slice(startIndex, endIndex);
+  getPagedPosts(): Observable<IPost[]> {
+    return this.posts$.pipe(
+      map((posts) => {
+        const startIndex = (this.currentPage - 1) * this.postsPerPage;
+        const endIndex = startIndex + this.postsPerPage;
+        return posts.slice(startIndex, endIndex);
+      })
+    );
   }
 
   changePage(page: number) {
@@ -92,11 +87,13 @@ export class PostListComponent implements OnInit {
   }
 
   openConfirm(postId: string): void {
-    const post = this.posts.find((p: any) => p.id === postId);
-    if (post) {
-      this.selectedPostId = postId;
-      this.isConfirmationModalOpen = true;
-    }
+    this.posts$?.subscribe((posts) => {
+      const post = posts.find((p: any) => p.id === postId);
+      if (post) {
+        this.selectedPostId = postId;
+        this.isConfirmationModalOpen = true;
+      }
+    });
   }
 
   closeConfirm(): void {
@@ -105,39 +102,10 @@ export class PostListComponent implements OnInit {
   }
 
   deletePost(postId: any) {
-    this.firebase.deletePost(postId).subscribe(() => {
-      this.posts = this.posts.filter((post: any) => post.id !== postId);
-      this.closeConfirm();
-      this.updatePostList();
-      alert('Post deleted succesfully');
-    });
+    this.store.dispatch(fromPosts.deletePost({ postId }));
+    this.closeConfirm();
+    this.store.dispatch(fromPosts.updatePostList());
+    alert('Post deleted succesfully');
   }
 
-  updatePostList(): void {
-    this.firebase.getPost().subscribe((data: any) => {
-      this.posts = Object.keys(data).map((key) => {
-        data[key]['id'] = key;
-        return data[key];
-      });
-    });
-  }
-
-  searchPosts(query: string): Observable<IPost[]> {
-    if (!query || query.trim() === '') {
-      this.searchPerformed = false;
-      return of(this.posts);
-    }
-
-    return of(this.filterPosts(query));
-  }
-
-  filterPosts(query: string): IPost[] {
-    if (query.length < 3) {
-      return [];
-    }
-    this.searchPerformed = true;
-    return this.posts.filter((post: IPost) =>
-      post.title.toLowerCase().includes(query.toLowerCase())
-    );
-  }
 }

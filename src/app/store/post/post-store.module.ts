@@ -4,11 +4,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { PostsEffects } from './post.effects';
-import { postsReducer } from './post.reducers';
+import { postListReducer   } from './post.reducers';
 
 @NgModule({
     imports: [
-        StoreModule.forFeature('post', postsReducer),
+        StoreModule.forFeature('post', postListReducer ),
         EffectsModule.forFeature([PostsEffects])
     ]
 })

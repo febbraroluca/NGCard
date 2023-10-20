@@ -5,15 +5,16 @@
 ></app-confirm-modal>
 
 <div class="card-container">
-  <ng-container *ngIf="(searchResults$ | async)?.length > 0; else noResults">
-    <div *ngFor="let post of posts as posts" [@fadeIn]="animationState">
+  <ng-container *ngIf="(posts$ | async)?.length > 0; else noResults">
+    <div
+      *ngFor="let post of pagedPosts$ | async as posts"
+      [@fadeIn]="animationState"
+    >
       <div class="card position-relative" style="width: 16rem" appEventcard>
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-body-secondary">{{ post.id }}</h6>
           <h5 class="card-title">{{ post.title }}</h5>
-          <p class="card-text">
-            {{ post.body }}
-          </p>
+          <p class="card-text">{{ post.body }}</p>
         </div>
         <button
           type="button"
@@ -48,22 +49,27 @@
   <div class="pagesContainer">
     <nav aria-label="...">
       <ul class="pagination pagination-sm pages">
-        <li class="page-item" [class.active]="currentPage === 1"></li>
+        <li
+          class="page-item"
+          [class.active]="(currentPage$ | async) === 1"
+        ></li>
         <li
           class="page-item"
           *ngFor="let page of pages"
-          [class.active]="currentPage === page && page !== 1"
+          [class.active]="(currentPage$ | async) === page && page !== 1"
         >
           <a class="page-link" (click)="changePage(page)">{{ page }}</a>
         </li>
       </ul>
     </nav>
   </div>
-  <span class="badge bg-primary totalPosts">{{ posts.length }}</span>
+  <span class="badge bg-primary totalPosts">{{
+    (posts$ | async)?.length
+  }}</span>
 </div>
 
 <ng-template #noResults>
-  <div class="no-results" *ngIf="(searchResults$ | async)?.length === 0">
+  <div class="no-results" *ngIf="((posts$ | async)?.length || 0) === 0">
     <p>No results found.</p>
   </div>
 </ng-template>

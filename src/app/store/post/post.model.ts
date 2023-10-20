@@ -6,3 +6,9 @@ export interface IPostState {
   isLoading: boolean;
   postsPerPage: number;
 }
+
+export interface PostListState {
+  posts: IPost[];
+  currentPage: number;
+  searchQuery: string;
+}

@@ -5,54 +5,31 @@ const prefix = '[Posts]';
 
 export const getPosts = createAction(
   `${prefix} Get Posts`,
-  props<{ posts: IPost[] }>()
 );
 
 export const getPostSuccess = createAction(
   `${getPosts.type} Success`,
-  props<{
-    posts: IPost[];
-    postsPerPage: number;
-  }>()
-);
-
-export const createPost = createAction(
-  `${prefix} Create Post`,
-  props<{
-    post: Partial<IPost>;
-  }>()
-);
-
-export const createPostSuccess = createAction(
-  `${createPost.type} Success`,
-  props<{
-    post: IPost;
-  }>()
-);
-
-export const updatePost = createAction(
-  `${prefix} Update Post`,
-  props<{
-    post: IPost;
-  }>()
-);
-
-export const updatePostSuccess = createAction(
-  `${updatePost.type} Success`,
-  props<{
-    post: IPost;
-  }>()
+  props<{ posts: IPost[] }>()
 );
 
 export const deletePost = createAction(
   `${prefix} Delete Post`,
   props<{
-    post: IPost;
+    postId: string;
   }>()
 );
-export const deletePostSuccess = createAction(
-  `${deletePost.type} Success`,
-  props<{
-    post: IPost;
-  }>()
+
+export const searchPosts = createAction(
+  `${prefix}  Search Posts`,
+  props<{ query: string }>()
 );
+
+export const searchPostsSuccess = createAction(
+  `${prefix} Search Posts Success`,
+  props<{ searchResults: IPost[] }>()
+);
+
+export const updatePostList = createAction(
+  `${prefix} Update Post List`
+);
+

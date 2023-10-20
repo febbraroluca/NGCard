@@ -20,6 +20,7 @@ export class PostService {
   }
 
   getPost(): Observable<IPost[]> {
+    console.log('getPost() service method is called');
     return this.http.get<IPost[]>(this.url + '.json');
   }
 
