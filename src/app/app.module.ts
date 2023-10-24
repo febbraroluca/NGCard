@@ -46,7 +46,7 @@ import { PostStoreModule } from './store/post/post-store.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({}),
     PostStoreModule,
